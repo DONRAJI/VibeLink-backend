@@ -61,4 +61,19 @@ router.post('/:id/add', async (req, res) => {
     }
 });
 
+router.delete('/:id', async (req, res) => {
+    try {
+        const result = await Playlist.findByIdAndDelete(req.params.id);
+
+        if (!result) {
+            return res.status(404).json({ error: 'Playlist not found' });
+        }
+
+        res.json({ message: 'Playlist deleted successfully' });
+    } catch (error) {
+        console.error('Delete Error:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 module.exports = router;
